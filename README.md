@@ -5,7 +5,7 @@ I have used PHP version 8.3, node v22 and Laravel v11.23.5 with some bootstrap a
 **Things you'll need to do to get it working on your machine:**
 
 1. Ensure you have PHP, Composer and Node.js installed
-2. Clone this repo: git clone https://github.com/GlennWinter/WorldBankTechTest.git
+2. Clone this repo, the branch is 'master': git clone https://github.com/GlennWinter/WorldBankTechTest.git
 3. cd into project
 4. Run "composer install"
 5. Run "npm install"
