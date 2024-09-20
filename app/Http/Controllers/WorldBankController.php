@@ -33,33 +33,33 @@ class WorldBankController extends Controller
      * Action used to search for a country by it's ISO's code.
      *
      * @param Request $request
-     * @return Factory|View|Application|RedirectResponse
+     * @return RedirectResponse|View|Application|Factory
      */
-    public function search(Request $request):  Factory|View|Application|RedirectResponse
+    public function search(Request $request): RedirectResponse|View|Application|Factory
     {
-        try {
-            // Validate the ISO in the request.
-            $request->validate([
-                'isoCode' => 'required|alpha|size:2,3',
-            ]);
-            // Makes the ISO uppercase as it will error when it gets to API.
-            $isoCode = strtoupper($request->input('isoCode'));
+        // Validate the ISO in the request.
+        $request->validate([
+            'isoCode' => 'required|alpha|size:2,3',
+        ]);
+        // Makes the ISO uppercase as it will error when it gets to API.
+        $isoCode = strtoupper($request->input('isoCode'));
 
+        try {
             // Make service method call to get country by ISO code.
-            $response = $this->worldBankService->getCountryByIso($isoCode);
-            return view('worldBank', ['countryData' => $response]);
+            $countryData = $this->worldBankService->getCountryByIso($isoCode);
+            return view('worldBank', ['countryData' => $countryData]);
         } catch (Exception $exception) {
            // Logs the error and returns message to frontend.
             Log::create([
                 'action' => 'ISO Search',
                 'error_message' => $exception->getMessage()
             ]);
-            return redirect()->route('home')->withErrors([$exception->getMessage()]);
+            return redirect()->route('home')->withErrors(['message' => 'An error occurred while searching for the country.']);
         }
     }
 
     /**
-     * Gets all the countries from World Bank.
+     * Gets all the countries from the World Bank service.
      *
      * @return Factory|View|Application|RedirectResponse
      */
@@ -67,16 +67,16 @@ class WorldBankController extends Controller
     {
         try {
             // Make service method call to get all countries.
-            $response = $this->worldBankService->getCountries();
+            $countries = $this->worldBankService->getCountries();
 
-            return view('worldBank', ['countryData' => $response]);
+            return view('worldBank', ['countryData' => $countries]);
         } catch (Exception $exception) {
             // Logs the error and returns message to frontend.
             Log::create([
                 'action' => 'Get All Countries',
                 'error_message' => $exception->getMessage()
             ]);
-            return redirect()->route('home')->withErrors([$exception->getMessage()]);
+            return redirect()->route('home')->withErrors(['message' => 'An error occurred while retrieving countries.']);
         }
     }
 }
