@@ -8,8 +8,6 @@ Route::get('/', function () {
     return view('worldBank');
 })->name('home');
 
-
 // Post routes
 Route::post('/get-all-countries', [WorldBankController::class, 'getAllCountries'])->name('getAllCountries');
 Route::post('/search', [WorldBankController::class, 'search'])->name('search');
-

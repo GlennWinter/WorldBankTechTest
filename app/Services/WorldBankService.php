@@ -28,6 +28,7 @@ class WorldBankService
      *
      * @param string $iso The country's ISO code.
      * @return array
+     * @throws Exception
      */
     public function getCountryByIso(string $iso): array
     {
@@ -69,6 +70,7 @@ class WorldBankService
      * Gets all countries from the World Bank API.
      *
      * @return array
+     * @throws Exception
      */
     public function getCountries(): array
     {
@@ -76,14 +78,13 @@ class WorldBankService
             // Calls World Bank Client to make API request to get all countries.
             $response = $this->worldBankClient->getAllCountries();
 
+            // Checks if response contains valid data to loop through.
             if (empty($response)) {
                 throw new Exception('No countries were found.', 404);
             }
 
-            // Checks if response contains valid data to loop through.
-            $counties = $response;
-
             // Loop through all countries and format them.
+            $counties = $response;
             $countryData = [];
             foreach ($counties as $country) {
                 $countryData[] = [
