@@ -17,7 +17,7 @@ I have used PHP version 8.3, node v22 and Laravel v11.23.5 with some bootstrap a
 **Future Development Ideas:**
 - Have pagination buttons instead of having to scroll for ages on the 'view all countries' view.
 - Add dropdown for amount of countries to return
-- Have the background be some javascript library of a world which will rotate to depending on what ISO code was inputted.
+- Have the background be some javascript library of a world which will it will rotate to the country depending on what ISO code was inputted.
 - Add a filter list for the country names like A, B, C etc
 - Add feature tests
 - Add more unit tests for the service layer and other files
