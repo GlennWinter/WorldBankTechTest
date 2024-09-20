@@ -12,6 +12,7 @@ I have used PHP version 8.3, node v22 and Laravel v11.23.5 with some bootstrap a
 6. Run "php artisan migrate" to create the log database.
 7. Run "npm run build"
 8. The project should now be ready to go to your browser and use the application.
+9. You can run the tests by this command "php artisan test"
 
 **Future Development Ideas:**
 - Have pagination buttons instead of having to scroll for ages on the 'view all countries' view.
