@@ -11,6 +11,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Validation\ValidationException;
 
 class WorldBankController extends Controller
 {
@@ -37,10 +38,16 @@ class WorldBankController extends Controller
      */
     public function search(Request $request): RedirectResponse|View|Application|Factory
     {
-        // Validate the ISO in the request.
-        $request->validate([
-            'isoCode' => 'required|alpha|size:2,3',
-        ]);
+        try {
+            // Validate the ISO in the request.
+            $request->validate([
+                'isoCode' => 'required|alpha|regex:/^[A-Z]{2,3}$/',
+            ]);
+        } catch (ValidationException $exception) {
+            // Redirect to home page with validation error.
+            return redirect()->route('home')->withErrors($exception->validator)->withInput();
+        }
+
         // Makes the ISO uppercase as it will error when it gets to API.
         $isoCode = strtoupper($request->input('isoCode'));
 
