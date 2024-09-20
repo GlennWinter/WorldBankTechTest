@@ -41,7 +41,7 @@ class WorldBankController extends Controller
         try {
             // Validate the ISO in the request.
             $request->validate([
-                'isoCode' => 'required|alpha|regex:/^[A-Z]{2,3}$/',
+                'isoCode' => 'required|alpha|regex:/^[A-Za-z]{2,3}$/',
             ]);
         } catch (ValidationException $exception) {
             // Redirect to home page with validation error.
