@@ -86,6 +86,7 @@ class WorldBankControllerTest extends TestCase
             ->expects($this->never())
             ->method('getCountryByIso');
 
+        // Assert that an appropriate error message is shown.
         $response = $this->post('/search', ['isoCode' => $isoCode]);
         $response->assertSessionHasErrors(['isoCode']);
     }
@@ -105,10 +106,8 @@ class WorldBankControllerTest extends TestCase
             ->with(strtoupper($isoCode))
             ->will($this->throwException(new Exception('Service error happened.')));
 
-        // Act: Send a valid request
         $response = $this->post('/search', ['isoCode' => $isoCode]);
-
-        // Assert: Check that it redirects with an error message
+        // Assert the redirect is to home and there's an error message.
         $response->assertRedirect(route('home'));
         $response->assertSessionHasErrors(['message' => 'An error occurred while searching for the country.']);
     }
@@ -120,7 +119,6 @@ class WorldBankControllerTest extends TestCase
      */
     public function testGetAllCountriesSuccessful(): void
     {
-
         $testCountriesData = [
             [
                 'name' => 'United Kingdom',
@@ -152,6 +150,7 @@ class WorldBankControllerTest extends TestCase
 
         $response = $this->post('/get-all-countries');
 
+        // Assert status code is successful and view is correct
         $response->assertStatus(200);
         $response->assertViewIs('worldBank');
 
@@ -187,7 +186,7 @@ class WorldBankControllerTest extends TestCase
 
         $response = $this->post('/get-all-countries');
 
-        // Assert: Check that it redirects with an error message
+        // Check a redirect to home happened and an appropriate error message
         $response->assertRedirect(route('home'));
         $response->assertSessionHasErrors(['message' => 'An error occurred while retrieving countries.']);
     }
